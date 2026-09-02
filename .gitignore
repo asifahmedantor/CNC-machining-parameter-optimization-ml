@@ -1,3 +1,88 @@
-*.h5
-.ipynb_checkpoints/
+# =========================
+# Python
+# =========================
+
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+.venv/
+
+
+# =========================
+# Jupyter Notebook
+# =========================
+
+.ipynb_checkpoints/
+
+
+# =========================
+# Data files
+# =========================
+
+# HDF5 database
+*.h5
+database.h5
+
+# Large raw data
+data/raw/
+
+
+# =========================
+# Model files
+# =========================
+
+*.pkl
+*.joblib
+*.pickle
+
+
+# =========================
+# Results temporary files
+# =========================
+
+results/tmp/
+results/cache/
+
+
+# =========================
+# IDE
+# =========================
+
+.vscode/
+.idea/
+
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db
+
+
+# =========================
+# Python build
+# =========================
+
+build/
+dist/
+*.egg-info/
+
+
+# =========================
+# Cache
+# =========================
+
+.pytest_cache/
+.cache/
+
+
+# =========================
+# Logs
+# =========================
+
+*.log
