@@ -1,0 +1,200 @@
+import os
+from datetime import datetime
+
+
+def generate_report():
+
+    print("Generating final research report...")
+
+
+    # Create report folder
+    os.makedirs(
+        "results/report",
+        exist_ok=True
+    )
+
+
+    report_content = f"""
+
+CNC MACHINING PARAMETER OPTIMIZATION USING MACHINE LEARNING
+============================================================
+
+
+Project Overview
+----------------
+
+This project focuses on optimizing CNC machining parameters
+using machine learning techniques.
+
+The main objective is to predict surface roughness and identify
+the optimum machining conditions for improved machining quality.
+
+
+
+Dataset Information
+-------------------
+
+Input Parameters:
+
+1. Depth of Cut (ap)
+2. Feed Rate (f)
+3. Cutting Speed (vc)
+4. Material
+5. Tool
+
+
+Target Parameter:
+
+Surface Roughness (Ra)
+
+
+
+Machine Learning Models Used
+----------------------------
+
+1. Linear Regression
+
+2. Random Forest Regression
+
+
+
+Model Performance Results
+-------------------------
+
+
+Linear Regression:
+
+MAE  : 0.252574
+
+RMSE : 0.414793
+
+R2   : 0.864631
+
+
+
+Random Forest:
+
+MAE  : 0.082873
+
+RMSE : 0.141607
+
+R2   : 0.984223
+
+
+
+Best Performing Model
+---------------------
+
+Random Forest Regression was selected as the best model.
+
+Reason:
+
+- Lowest prediction error
+- Highest R2 score
+- Better capability to capture nonlinear machining behaviour
+
+
+
+Feature Importance Analysis
+---------------------------
+
+The most influential machining parameters are:
+
+
+1. Feed Rate (f)
+   Importance: 95.8%
+
+
+2. Material
+   Importance: 2.39%
+
+
+3. Cutting Speed (vc)
+   Importance: 0.96%
+
+
+4. Depth of Cut (ap)
+   Importance: 0.82%
+
+
+5. Tool
+   Importance: Negligible impact
+
+
+
+Optimization Result
+-------------------
+
+Optimal Machining Parameters:
+
+
+Depth of Cut:
+0.5 mm
+
+
+Feed Rate:
+0.1 mm/rev
+
+
+Cutting Speed:
+300 m/min
+
+
+Material:
+2
+
+
+Tool:
+0
+
+
+
+Predicted Surface Roughness:
+
+0.3735 Ra
+
+
+
+Conclusion
+----------
+
+Machine learning successfully predicted CNC machining performance.
+
+Random Forest provided superior prediction accuracy compared
+with Linear Regression.
+
+The optimized machining parameters can be used to achieve
+better surface quality and reduce experimental cost.
+
+
+
+Generated Date:
+{datetime.now().strftime("%Y-%m-%d")}
+
+
+"""
+
+
+    # Save report
+
+    with open(
+        "results/report/final_report.txt",
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        file.write(report_content)
+
+
+
+    print("Report generated successfully")
+
+    print(
+        "Saved: results/report/final_report.txt"
+    )
+
+
+
+if __name__ == "__main__":
+
+    generate_report()
