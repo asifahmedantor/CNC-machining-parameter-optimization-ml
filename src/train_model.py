@@ -1,8 +1,18 @@
+# ==========================================
+# CNC Machining Parameter Optimization
+# Random Forest Model Training
+# ==========================================
+
+
 import pandas as pd
+import numpy as np
 import os
 import joblib
 
+
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 
@@ -13,145 +23,224 @@ from sklearn.metrics import (
 )
 
 
-def train_models(df, target_column):
 
-    results = {}
+# ================================
+# Load Dataset
+# ================================
 
-    # Separate features and target
-    X = df.drop(columns=[target_column])
-    y = df[target_column]
+data_path = "data/processed/processed_data.csv"
+
+df = pd.read_csv(data_path)
 
 
-    # Remove unnecessary columns
-    X = X.drop(
-        columns=[
-            "Sample_ID",
-            "Experiment_Path"
+print("Dataset Loaded Successfully")
+
+print(df.head())
+
+print("\nColumns:")
+print(df.columns)
+
+
+
+# ================================
+# Encode Categorical Data
+# ================================
+
+encoder = LabelEncoder()
+
+
+for col in df.select_dtypes(include="object").columns:
+
+    df[col] = encoder.fit_transform(df[col])
+
+
+
+# ================================
+# Feature and Target
+# ================================
+
+
+target = "Surface_Roughness_Ra"
+
+
+X = df.drop(
+    target,
+    axis=1
+)
+
+
+y = df[target]
+
+
+
+# ================================
+# Train Test Split
+# ================================
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
+
+
+
+# ================================
+# Linear Regression
+# ================================
+
+linear_model = LinearRegression()
+
+linear_model.fit(
+    X_train,
+    y_train
+)
+
+
+linear_pred = linear_model.predict(
+    X_test
+)
+
+
+
+linear_r2 = r2_score(
+    y_test,
+    linear_pred
+)
+
+
+linear_mae = mean_absolute_error(
+    y_test,
+    linear_pred
+)
+
+
+linear_rmse = np.sqrt(
+    mean_squared_error(
+        y_test,
+        linear_pred
+    )
+)
+
+
+
+# ================================
+# Random Forest
+# ================================
+
+rf_model = RandomForestRegressor(
+    n_estimators=200,
+    random_state=42
+)
+
+
+rf_model.fit(
+    X_train,
+    y_train
+)
+
+
+rf_pred = rf_model.predict(
+    X_test
+)
+
+
+
+rf_r2 = r2_score(
+    y_test,
+    rf_pred
+)
+
+
+rf_mae = mean_absolute_error(
+    y_test,
+    rf_pred
+)
+
+
+rf_rmse = np.sqrt(
+    mean_squared_error(
+        y_test,
+        rf_pred
+    )
+)
+
+
+
+# ================================
+# Performance Table
+# ================================
+
+results = pd.DataFrame(
+    {
+        "Model":
+        [
+            "Linear Regression",
+            "Random Forest"
         ],
-        errors="ignore"
-    )
 
+        "R2 Score":
+        [
+            linear_r2,
+            rf_r2
+        ],
 
-    # Train-test split
-    X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=0.2,
-        random_state=42
-    )
+        "MAE":
+        [
+            linear_mae,
+            rf_mae
+        ],
 
-
-    # Models
-    models = {
-
-        "Linear Regression":
-            LinearRegression(),
-
-        "Random Forest":
-            RandomForestRegressor(
-                n_estimators=100,
-                random_state=42
-            )
+        "RMSE":
+        [
+            linear_rmse,
+            rf_rmse
+        ]
     }
+)
 
 
-    # Create result folder
-    os.makedirs(
-        "results",
-        exist_ok=True
-    )
-
-
-    for name, model in models.items():
-
-        print(f"Training {name}...")
-
-
-        # Train model
-        model.fit(
-            X_train,
-            y_train
-        )
-
-
-        # Prediction
-        prediction = model.predict(
-            X_test
-        )
-
-
-        # Metrics
-        mae = mean_absolute_error(
-            y_test,
-            prediction
-        )
-
-
-        rmse = mean_squared_error(
-            y_test,
-            prediction
-        ) ** 0.5
-
-
-        r2 = r2_score(
-            y_test,
-            prediction
-        )
-
-
-        results[name] = {
-
-            "MAE": mae,
-            "RMSE": rmse,
-            "R2": r2
-        }
-
-
-        # Save Random Forest model
-        if name == "Random Forest":
-
-            joblib.dump(
-                model,
-                "results/random_forest_model.pkl"
-            )
-
-            print(
-                "Random Forest model saved successfully"
-            )
-
-
-    return results
+print("\nModel Performance:")
+print(results)
 
 
 
-if __name__ == "__main__":
+# ================================
+# Save Model
+# ================================
+
+os.makedirs(
+    "models",
+    exist_ok=True
+)
 
 
-    # Load processed data
-
-    df = pd.read_csv(
-        "data/processed/processed_data.csv"
-    )
-
-
-    # Target column
-
-    target_column = "Surface_Roughness_Ra"
+joblib.dump(
+    rf_model,
+    "models/random_forest.pkl"
+)
 
 
-    # Train
-
-    results = train_models(
-        df,
-        target_column
-    )
+print("\nRandom Forest Model Saved!")
 
 
-    print(
-        "\nTraining completed successfully"
-    )
+
+# ================================
+# Save Metrics
+# ================================
+
+os.makedirs(
+    "results/metrics",
+    exist_ok=True
+)
 
 
-    print(
-        results
-    )
+results.to_csv(
+    "results/metrics/model_performance.csv",
+    index=False
+)
+
+
+
+print("\nTraining Completed Successfully!")

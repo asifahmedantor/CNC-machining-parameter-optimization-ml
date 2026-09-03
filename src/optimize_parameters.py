@@ -1,184 +1,123 @@
+import numpy as np
 import pandas as pd
 import joblib
-import itertools
-import os
+
+
+print("Optimization started...")
+
+# Load trained model
+model = joblib.load("models/random_forest.pkl")
+
+print("Model loaded successfully")
 
 
 def optimize_parameters():
 
-    print("Optimization started...")
-
-
-    # Load processed data
-    df = pd.read_csv(
-        "data/processed/processed_data.csv"
-    )
-
-
-    # Load trained Random Forest model
-    model = joblib.load(
-        "results/random_forest_model.pkl"
-    )
-
-
-    print("Model loaded successfully")
-
-
-    # Parameter values
-    depth_values = df["Depth_of_Cut_ap"].unique()
-
-    feed_values = df["Feed_Rate_f"].unique()
-
-    speed_values = df["Cutting_Speed_vc"].unique()
-
-    material_values = df["Material"].unique()
-
-    tool_values = df["Tool"].unique()
-
-
-
-    # Limit combinations for fast optimization
-
-    depth_values = depth_values[:20]
-
-    feed_values = feed_values[:20]
-
-    speed_values = speed_values[:20]
-
-    material_values = material_values[:5]
-
-    tool_values = tool_values[:5]
-
-
-
+    best_ra = float("inf")
     best_result = None
 
-    count = 0
+
+    # Parameter range
+    depth_values = np.linspace(0.2, 1.0, 5)
+    feed_values = np.linspace(0.05, 0.25, 5)
+    speed_values = np.linspace(100, 400, 10)
 
 
-
-    # Test combinations
-
-    for values in itertools.product(
-        depth_values,
-        feed_values,
-        speed_values,
-        material_values,
-        tool_values
-    ):
+    # Encoded values
+    materials = {
+        "20MnCr5": 0,
+        "EN AW-6082": 1,
+        "41Cr4": 2
+    }
 
 
-        count += 1
+    tools = {
+        "Tool1": 0
+    }
 
 
-        depth, feed, speed, material, tool = values
+    results = []
 
 
+    for depth in depth_values:
 
-        input_data = pd.DataFrame(
+        for feed in feed_values:
 
-            [[
-                depth,
-                feed,
-                speed,
-                material,
-                tool
-            ]],
+            for speed in speed_values:
 
-            columns=[
+                for material_name, material_code in materials.items():
 
-                "Depth_of_Cut_ap",
-
-                "Feed_Rate_f",
-
-                "Cutting_Speed_vc",
-
-                "Material",
-
-                "Tool"
-            ]
-        )
+                    for tool_name, tool_code in tools.items():
 
 
-        prediction = model.predict(
-            input_data
-        )[0]
+                        input_data = pd.DataFrame({
+
+                            "Sample_ID":[0],
+
+                            "Experiment_Path":[0],
+
+                            "Depth_of_Cut_ap":[depth],
+
+                            "Feed_Rate_f":[feed],
+
+                            "Cutting_Speed_vc":[speed],
+
+                            "Material":[material_code],
+
+                            "Tool":[tool_code]
+
+                        })
 
 
-
-        result = {
-
-            "Depth_of_Cut_ap": depth,
-
-            "Feed_Rate_f": feed,
-
-            "Cutting_Speed_vc": speed,
-
-            "Material": material,
-
-            "Tool": tool,
-
-            "Predicted_Surface_Roughness": prediction
-
-        }
+                        prediction = model.predict(input_data)[0]
 
 
+                        results.append({
 
-        if (
-            best_result is None
-            or prediction < best_result["Predicted_Surface_Roughness"]
-        ):
+                            "Depth_of_Cut":round(depth,3),
 
-            best_result = result
+                            "Feed_Rate":round(feed,3),
 
+                            "Cutting_Speed":round(speed,2),
 
+                            "Material":material_name,
 
-    print(
-        f"Total combinations tested: {count}"
-    )
+                            "Tool":tool_name,
 
+                            "Predicted_Ra":round(prediction,4)
 
-    print(
-        "\nOptimization completed successfully"
-    )
+                        })
 
 
-    print(
-        "--------------------------------"
-    )
+                        if prediction < best_ra:
 
+                            best_ra = prediction
 
-    print(
-        best_result
-    )
+                            best_result = results[-1]
 
 
 
     # Save result
+    result_df = pd.DataFrame(results)
 
-    os.makedirs(
-        "results",
-        exist_ok=True
-    )
-
-
-    pd.DataFrame(
-        [best_result]
-    ).to_csv(
-
+    result_df.to_csv(
         "results/optimized_parameters.csv",
-
         index=False
     )
 
 
-    print(
-        "\nSaved: results/optimized_parameters.csv"
-    )
+    return best_result
 
 
 
+# Run optimization
 
-if __name__ == "__main__":
+result = optimize_parameters()
 
-    optimize_parameters()
+
+print("\nBest Machining Parameters")
+print("-------------------------")
+
+for key,value in result.items():
+
+    print(key,":",value)
