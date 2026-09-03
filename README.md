@@ -1,308 +1,400 @@
-# CNC Machining Parameter Optimization Using Machine Learning
+# ⚙️ CNC Machining Parameter Optimization Using Machine Learning
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Random%20Forest-green)
-![Project Status](https://img.shields.io/badge/Status-Completed-success)
-
-
-## Overview
-
-This project focuses on predicting and optimizing CNC machining parameters using Machine Learning techniques.
-
-The main objective is to develop a data-driven approach for predicting surface roughness and identifying optimal machining parameters to improve machining quality.
-
-The project implements machine learning models to analyze the relationship between machining parameters and surface roughness.
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Regression-green)
+![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
+![Status](https://img.shields.io/badge/Status-Completed-success)
 
 ---
 
-# Objectives
+# 📌 Overview
 
-- Predict CNC machining surface roughness using ML models
-- Analyze the effect of machining parameters
-- Identify the most influential machining factors
-- Optimize machining parameters for better surface quality
-- Generate automated analysis reports
+This project presents an Artificial Intelligence based system for predicting CNC machining surface roughness and optimizing machining parameters using Machine Learning techniques.
 
----
+The main goal of this research is to develop a data-driven approach that can accurately predict surface roughness (Ra) and determine the optimal machining parameters to improve machining quality, productivity, and efficiency.
 
-# Project Workflow
-
-```
-Raw CNC Dataset
-        |
-        ↓
-Data Preprocessing
-        |
-        ↓
-Feature Engineering
-        |
-        ↓
-Machine Learning Training
-        |
-        ↓
-Model Evaluation
-        |
-        ↓
-Feature Importance Analysis
-        |
-        ↓
-Parameter Optimization
-        |
-        ↓
-Final Report Generation
-```
+The system integrates Machine Learning prediction models with an optimization module to recommend the best machining conditions for achieving minimum surface roughness.
 
 ---
 
-# Dataset Parameters
+# 🎯 Project Objectives
 
-The model uses CNC machining parameters as input features.
+- Predict CNC machining surface roughness (Ra)
+- Analyze the influence of machining parameters
+- Compare multiple Machine Learning regression models
+- Select the best performing prediction model
+- Optimize machining parameters for minimum roughness
+- Develop an interactive AI-based dashboard
 
-## Input Features
+---
 
-| Feature | Description |
+# 🚀 System Features
+
+
+## 1. Live Surface Roughness Prediction
+
+The developed system predicts surface roughness based on CNC machining parameters:
+
+
+### Input Parameters:
+
+- Depth of Cut (ap)
+- Feed Rate (f)
+- Cutting Speed (Vc)
+- Material Type
+- Cutting Tool
+
+
+### Output:
+
+- Predicted Surface Roughness (Ra)
+
+
+---
+
+# 🤖 Machine Learning Models
+
+
+The following regression models are implemented:
+
+
+| Model | Description |
 |---|---|
-| Feed Rate | Material feeding speed |
-| Cutting Speed | Spindle cutting speed |
-| Depth of Cut | Cutting depth |
-| Tool | Cutting tool type |
-| Material | Workpiece material |
+| Linear Regression | Basic regression model |
+| Random Forest | Ensemble learning approach |
+| Gradient Boosting | Boosting based regression |
+| Extra Trees Regression | High accuracy ensemble model |
 
-## Target Variable
-
-```
-Surface Roughness
-```
 
 ---
 
-# Machine Learning Models
+# 📊 Model Evaluation
 
-Two regression models were developed:
 
-## 1. Linear Regression
+Model performance is evaluated using:
 
-Used as a baseline model to understand the relationship between machining parameters and surface roughness.
 
-## 2. Random Forest Regression
+- R² Score
+- Mean Absolute Error (MAE)
+- Root Mean Square Error (RMSE)
 
-An ensemble machine learning model used for accurate prediction and parameter analysis.
-
----
-
----
-
-## 📊 Model Performance Results
-
-### R² Score Comparison
-
-![R2 Score Comparison](results/figures/model_R2_comparison.png)
-
-### MAE Comparison
-
-![MAE Comparison](results/figures/model_MAE_comparison.png)
-
-### RMSE Comparison
-
-![RMSE Comparison](results/figures/model_RMSE_comparison.png)
 
 ## 🏆 Best Performing Model
 
-### Random Forest Regression
 
-Random Forest achieved the best performance among the tested models.
-
-| Model | MAE | RMSE | R² Score |
-|---|---|---|---|
-| Linear Regression | 0.2525 | 0.4147 | 0.8646 |
-| Random Forest | 0.0828 | 0.1416 | **0.9842** |
-
-### Why Random Forest is Selected:
-
-✅ Highest prediction accuracy  
-✅ Lowest prediction error  
-✅ Better capability to capture nonlinear machining relationships  
-
----
-# Feature Importance Analysis
-
-Feature importance analysis was performed to identify the contribution of each machining parameter.
-
-## Feature Ranking
-
-| Feature | Importance |
-|---|---|
-| Feed Rate | 95.80% |
-| Material | 2.40% |
-| Cutting Speed | 0.96% |
-| Depth of Cut | 0.82% |
-| Tool | 0% |
-
-### Key Finding
-
-Feed Rate is the most influential parameter affecting surface roughness.
-
----
-
-# Optimization Result
-
-The optimized machining parameters were generated using the trained machine learning model.
-
-The optimization process helps identify machining conditions that can improve surface quality.
-
----
-
-# Results Visualization
-
-## Feature Importance
-
-![Feature Importance](results/figures/feature_importance.png)
+### Extra Trees Regression
 
 
-## Model Performance Comparison
+Performance:
 
-![Model Performance](results/figures/model_R2_comparison.png)
+
+```
+R² Score : 0.9907
+
+MAE      : 0.0702
+
+RMSE     : 0.1087
+```
+
+
+The model shows excellent prediction accuracy for CNC surface roughness estimation.
 
 
 ---
 
-# Project Structure
+# 🔍 Optimization Module
+
+
+The optimization module searches different machining parameter combinations and identifies the best machining conditions for minimum surface roughness.
+
+
+## Optimization Output:
+
+
+- Optimal Depth of Cut
+- Optimal Feed Rate
+- Optimal Cutting Speed
+- Material Selection
+- Tool Selection
+- Predicted Surface Roughness
+
+
+Example:
+
+
+```
+Optimal Machining Condition
+
+
+Depth of Cut     : 0.80 mm
+
+Feed Rate        : 0.05 mm/rev
+
+Cutting Speed    : 366.67 m/min
+
+Material         : 41Cr4
+
+Tool             : Tool1
+
+Predicted Ra     : 0.459 μm
+
+```
+
+
+---
+
+# 📈 Visualization Dashboard
+
+
+The developed Streamlit dashboard provides:
+
+
+## Model Performance Analysis
+
+✔ Model comparison  
+✔ R² Score comparison  
+✔ RMSE comparison  
+✔ MAE comparison  
+
+
+## Feature Analysis
+
+✔ Feature importance visualization  
+
+
+## Optimization Visualization
+
+✔ 3D Optimization Surface  
+✔ Parameter Effect Analysis  
+✔ Optimized Parameter Table  
+
+
+## Reporting System
+
+✔ Downloadable optimization report  
+
+
+---
+
+# 🏗️ System Workflow
+
+
+```
+CNC Machining Dataset
+
+          ↓
+
+Data Preprocessing
+
+          ↓
+
+Feature Engineering
+
+          ↓
+
+Machine Learning Training
+
+          ↓
+
+Model Evaluation
+
+          ↓
+
+Optimization Algorithm
+
+          ↓
+
+AI Prediction Dashboard
+
+          ↓
+
+Optimal Machining Parameters
+
+```
+
+
+---
+
+# 📂 Project Structure
+
 
 ```
 CNC-machining-parameter-optimization-ml
 
 │
-├── data
-│   ├── raw
-│   └── processed
+├── app.py
 │
-├── notebooks
-│
-├── results
-│   ├── figures
-│   ├── metrics
-│   └── report
-│
-├── src
-│   ├── data_preprocessing.py
-│   ├── train_model.py
-│   ├── evaluate_model.py
-│   ├── feature_analysis.py
-│   ├── model_performance.py
-│   ├── optimize_parameters.py
-│   └── generate_report.py
+├── database.h5
 │
 ├── requirements.txt
+│
 ├── README.md
-└── database.h5
+│
+│
+├── data
+│
+│
+├── models
+│   ├── random_forest.pkl
+│   ├── extra_trees.pkl
+│
+│
+├── src
+│   ├── train_model.py
+│   ├── evaluate_model.py
+│   ├── optimize_parameters.py
+│   ├── feature_analysis.py
+│   ├── generate_report.py
+│
+│
+├── results
+│   ├── metrics
+│   ├── figures
+│   └── report
+│
+
 ```
+
 
 ---
 
-# Installation
+# 🛠️ Technologies Used
+
+
+## Programming Language
+
+- Python 3.12
+
+
+## Machine Learning
+
+- Scikit-learn
+- Random Forest
+- Gradient Boosting
+- Extra Trees Regression
+
+
+## Data Processing
+
+- Pandas
+- NumPy
+
+
+## Visualization
+
+- Plotly
+- Matplotlib
+
+
+## Application Development
+
+- Streamlit
+
+
+---
+
+# ⚙️ Installation
+
 
 Clone the repository:
+
 
 ```bash
 git clone https://github.com/asifahmedantor/CNC-machining-parameter-optimization-ml.git
 ```
 
-Move into project directory:
+
+Navigate into project folder:
+
 
 ```bash
 cd CNC-machining-parameter-optimization-ml
 ```
 
+
 Install dependencies:
+
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# Running The Project
-
-## 1. Data Preprocessing
-
-```bash
-python -m src.data_preprocessing
-```
-
-## 2. Train Machine Learning Models
-
-```bash
-python -m src.train_model
-```
-
-## 3. Evaluate Model
-
-```bash
-python -m src.evaluate_model
-```
-
-## 4. Feature Analysis
-
-```bash
-python -m src.feature_analysis
-```
-
-## 5. Model Performance Analysis
-
-```bash
-python -m src.model_performance
-```
-
-## 6. Parameter Optimization
-
-```bash
-python -m src.optimize_parameters
-```
-
-## 7. Generate Final Report
-
-```bash
-python -m src.generate_report
-```
 
 ---
 
-# Technologies Used
+# ▶️ Run Application
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Matplotlib
-- Machine Learning
-- Random Forest Regression
-- Linear Regression
 
----
+Start Streamlit application:
 
-# Results Summary
 
-The developed ML pipeline successfully predicts CNC machining surface roughness and identifies important machining parameters.
+```bash
+streamlit run app.py
+```
 
-Random Forest provided superior prediction performance compared with Linear Regression.
 
-The analysis shows that Feed Rate has the strongest influence on surface roughness.
+Application will open:
+
+
+```
+http://localhost:8501
+```
+
 
 ---
 
-# Future Work
+# 📸 Dashboard Modules
 
-- Implement XGBoost and Neural Network models
-- Develop real-time CNC optimization system
-- Create web-based prediction application
-- Integrate Industrial IoT monitoring
-- Deploy ML model for industrial applications
+
+The application contains:
+
+
+✅ Live Prediction System
+
+✅ Machine Learning Model Comparison
+
+✅ Feature Importance Dashboard
+
+✅ Optimization Module
+
+✅ Best Machining Condition Finder
+
+✅ 3D Optimization Visualization
+
+✅ Parameter Effect Analysis
+
+✅ Report Generation
+
 
 ---
 
-# Author
+# 🔮 Future Improvements
 
-**CNC Machining Parameter Optimization ML Project**
 
-GitHub:
-https://github.com/asifahmedantor/CNC-machining-parameter-optimization-ml
+Future development areas:
+
+
+- Real-time CNC machine data integration
+- IoT based machining monitoring
+- Deep Learning based prediction
+- Automated CNC parameter control
+- Cloud-based AI machining platform
+
+
+---
+
+# 👨‍💻 Author
+
+
+## CNC AI Optimization System
+
+
+Machine Learning Based CNC Machining Parameter Optimization Project
+
+
+---
+
+# 📜 License
+
+
+This project is developed for academic and research purposes.
