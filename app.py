@@ -51,15 +51,12 @@ st.divider()
 # MODEL LOAD
 # ==========================================
 
-
-MODEL_PATH = "models/random_forest.pkl"
-
-
-
 @st.cache_resource
 def load_model():
 
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    BASE_DIR = os.path.dirname(
+        os.path.abspath(__file__)
+    )
 
     MODEL_PATH = os.path.join(
         BASE_DIR,
@@ -67,7 +64,9 @@ def load_model():
         "random_forest.pkl"
     )
 
-    model = joblib.load(MODEL_PATH)
+    model = joblib.load(
+        MODEL_PATH
+    )
 
     return model
 
@@ -80,7 +79,6 @@ model = load_model()
 # ==========================================
 # METRIC DATA LOAD
 # ==========================================
-
 
 @st.cache_data
 def load_metrics():
@@ -105,7 +103,6 @@ metrics_df = load_metrics()
 # OPTIMIZATION DATA LOAD
 # ==========================================
 
-
 @st.cache_data
 def load_optimization():
 
@@ -129,14 +126,13 @@ opt_df = load_optimization()
 # LIVE PREDICTION
 # ==========================================
 
-
 st.header(
     "🔮 Live Surface Roughness Prediction"
 )
 
 
 
-col1,col2,col3 = st.columns(3)
+col1, col2, col3 = st.columns(3)
 
 
 
@@ -168,32 +164,25 @@ with col3:
 
 
 material = st.selectbox(
-
     "Material",
-
     [
         "20MnCr5",
         "41Cr4",
         "Aluminium",
         "Steel"
     ]
-
 )
 
 
 
 tool = st.selectbox(
-
     "Tool",
-
     [
         "Tool1",
         "Tool2",
         "Tool3"
     ]
-
 )
-
 
 
 
@@ -201,20 +190,25 @@ if st.button(
     "Predict Surface Roughness"
 ):
 
-
     try:
 
+        input_data = pd.DataFrame({
 
-     input_data = pd.DataFrame({
-    "Depth_of_Cut_ap": [depth],
-    "Feed_Rate_f": [feed],
-    "Cutting_Speed_vc": [speed],
-    "Material": [material],
-    "Tool": [tool],
-    "Experiment_Path": ["unknown"],
-    "Sample_ID": [0]
-})
+            "Depth_of_Cut_ap": [depth],
 
+            "Feed_Rate_f": [feed],
+
+            "Cutting_Speed_vc": [speed],
+
+            "Material": [material],
+
+            "Tool": [tool],
+
+            "Experiment_Path": ["unknown"],
+
+            "Sample_ID": [0]
+
+        })
 
 
         result = model.predict(
@@ -222,11 +216,8 @@ if st.button(
         )
 
 
-
         st.success(
-
             f"Predicted Surface Roughness (Ra): {result[0]:.4f}"
-
         )
 
 
@@ -237,8 +228,6 @@ if st.button(
 
 
 st.divider()
-
-
 
 # ==========================================
 # MODEL PERFORMANCE
