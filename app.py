@@ -59,9 +59,7 @@ MODEL_PATH = "models/random_forest.pkl"
 @st.cache_resource
 def load_model():
 
-    model = joblib.load(
-        MODEL_PATH
-    )
+    model = joblib.load("models/random_forest.pkl")
 
     return model
 
