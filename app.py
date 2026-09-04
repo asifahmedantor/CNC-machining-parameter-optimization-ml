@@ -205,10 +205,10 @@ if st.button(
     try:
 
 
-        input_data = pd.DataFrame({
-    "Depth of Cut (ap)": [depth],
-    "Feed Rate (f)": [feed],
-    "Cutting Speed (vc)": [speed],
+     input_data = pd.DataFrame({
+    "Depth_of_Cut_ap": [depth],
+    "Feed_Rate_f": [feed],
+    "Cutting_Speed_vc": [speed],
     "Material": [material],
     "Tool": [tool],
     "Experiment_Path": ["unknown"],
