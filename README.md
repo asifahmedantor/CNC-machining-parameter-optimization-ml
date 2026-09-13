@@ -3,10 +3,12 @@
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Regression-green)
 ![Framework](https://img.shields.io/badge/Framework-Streamlit-red)
-![Status](https://img.shields.io/badge/Status-Completed-success)
+![Status](https://img.shields.io/badge/Status-Completed-success) 
 
 ---
-
+🔗 **Live Demo:**  
+[Streamlit App](https://cnc-machining-parameter-optimization-ml-jpeuabhm8aft5fsqxnppuk.streamlit.app/)
+---
 # 📌 Overview
 
 This project presents an Artificial Intelligence based system for predicting CNC machining surface roughness and optimizing machining parameters using Machine Learning techniques.
