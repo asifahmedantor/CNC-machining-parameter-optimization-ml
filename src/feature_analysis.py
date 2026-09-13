@@ -23,7 +23,13 @@ def feature_analysis():
         "Material",
         "Tool"
     ]
-
+    display_names = [
+    "Depth of Cut",
+    "Feed Rate",
+    "Cutting Speed",
+    "Material",
+    "Tool"
+]
 
     # Get feature importance
     importance = model.feature_importances_
@@ -32,7 +38,7 @@ def feature_analysis():
     # Create dataframe
     importance_df = pd.DataFrame(
         {
-            "Feature": features,
+            "Feature": display_names,
             "Importance": importance
         }
     )

@@ -32,7 +32,7 @@ def optimize_parameters():
 
 
     tools = {
-        "Tool1": 0
+        "DNMG150608": 0
     }
 
 
@@ -68,7 +68,7 @@ def optimize_parameters():
 
                         })
 
-
+                        input_data = input_data.reindex(columns=model.feature_names_in_, fill_value=0)
                         prediction = model.predict(input_data)[0]
 
 
