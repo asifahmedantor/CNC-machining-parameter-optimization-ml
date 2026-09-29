@@ -581,7 +581,7 @@ A future extension of this work could combine machining prediction, sensor monit
 
 # 👨‍💻 Author
 
-## Asif Ahmed Antor
+## Md Asif Ahmed Antor
 
 **Mechanical Engineering Student**
 
