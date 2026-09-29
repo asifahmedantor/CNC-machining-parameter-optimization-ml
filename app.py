@@ -516,7 +516,10 @@ if opt_df is not None:
 
     st.dataframe(
 
-        opt_df.head(10),
+        opt_df.sort_values(
+    by="Predicted_Ra",
+    ascending=True
+).head(10),
 
         use_container_width=True
 
