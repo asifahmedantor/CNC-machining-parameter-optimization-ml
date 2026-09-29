@@ -104,19 +104,12 @@ model = load_model()
 
 @st.cache_resource
 def load_encoder():
-
     encoder_path = os.path.join(
         BASE_DIR,
         "models",
         "encoders.pkl"
     )
-
-    encoder = joblib.load(
-        encoder_path
-    )
-
-    return encoder
-
+    return joblib.load(encoder_path)
 
 encoder = load_encoder()
 
@@ -125,40 +118,26 @@ encoder = load_encoder()
 # LOAD METRICS
 # ==========================================
 
-
 @st.cache_data
 def load_metrics():
-
     path = os.path.join(
-
         BASE_DIR,
-
         "results",
-
         "metrics",
-
-        "model_performance.csv"
-
+        "group_cross_validation.csv"
     )
 
-
     if os.path.exists(path):
-
         return pd.read_csv(path)
-
 
     return None
 
-
-
 metrics_df = load_metrics()
-
 
 
 # ==========================================
 # LOAD OPTIMIZATION DATA
 # ==========================================
-
 
 @st.cache_data
 def load_optimization():
@@ -339,77 +318,33 @@ if metrics_df is not None:
 
 
 
-    best_model = metrics_df.loc[
-
-        metrics_df["R2 Score"].idxmax()
-
+    if metrics_df is not None:
+     best_model = metrics_df.loc[
+        metrics_df["Mean R2"].idxmax()
     ]
-
-
 
     c1, c2, c3 = st.columns(3)
 
-
-
     with c1:
-
         st.metric(
-
             "🏆 Best Model",
-
             best_model["Model"]
-
         )
-
-
 
     with c2:
-
         st.metric(
-
-            "R² Score",
-
-            round(
-
-                best_model["R2 Score"],
-
-                4
-
-            )
-
+            "Mean R²",
+            f'{best_model["Mean R2"]:.4f} ± {best_model["R2 SD"]:.4f}'
         )
-
-
 
     with c3:
-
         st.metric(
-
-            "RMSE",
-
-            round(
-
-                best_model["RMSE"],
-
-                4
-
-            )
-
+            "Mean RMSE",
+            f'{best_model["Mean RMSE"]:.4f}'
         )
 
-
-
 else:
-
-
-    st.warning(
-
-        "Model performance file not found"
-
-    )
-
-
-
+    st.warning("Model performance file not found")          
 st.divider()
 
 
