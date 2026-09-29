@@ -514,6 +514,26 @@ results/metrics/group_cross_validation.csv
 ```
 
 ---
+# 🔍 Model-Based Parameter Optimization
+
+After model evaluation, the **Extra Trees** model was used to search for machining conditions associated with lower predicted surface roughness.
+
+The optimization search was restricted to the parameter ranges represented in the available dataset to avoid extrapolation beyond the modeled domain.
+
+## 🏆 Best Model-Predicted Machining Condition
+
+| Parameter | Value |
+|---|---|
+| Depth of Cut (ap) | **0.75 mm** |
+| Feed Rate (f) | **0.10 mm/rev** |
+| Cutting Speed (Vc) | **200 m/min** |
+| Material | **41Cr4** |
+| Cutting Tool | **DNMG150608** |
+| Predicted Surface Roughness (Ra) | **0.362 µm** |
+
+> This result is a **model prediction** obtained from the parameter-search procedure and should not be interpreted as experimentally verified optimal machining performance.
+
+The optimization module also ranks candidate machining conditions by predicted surface roughness and displays the **Top 10 model-predicted conditions**.
 
 # 📸 Main Project Modules
 
